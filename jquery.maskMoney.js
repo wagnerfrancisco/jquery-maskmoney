@@ -44,15 +44,6 @@
 
 		return this.each(function() {
 			var input = $(this);
-			var dirty = false;
-
-			function markAsDirty() {
-				dirty = true;
-			}
-
-			function clearDirt(){
-				dirty = false;
-			}
 
 			function keypressEvent(e) {
 				e = e||window.event;
@@ -62,18 +53,14 @@
 
 				if (k<48||k>57) { // any key except the numbers 0-9
 					if (k==45) { // -(minus) key
-						markAsDirty();
 						input.val(changeSign(input));
 						return false;
 					} else if (k==43) { // +(plus) key
-						markAsDirty();
 						input.val(input.val().replace('-',''));
 						return false;
 					} else if (k==13||k==9) { // enter key or tab key
-						if(dirty){
-							clearDirt();
-							$(this).change();
-						}
+						input.change(); // what if I call the raw event?
+						this.onchange()
 						return true;
 					} else if (k==37||k==39) { // left arrow key or right arrow key
 						return true;
@@ -93,7 +80,6 @@
 					var endPos = selection.end;
 					x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
 					maskAndPosition(x, startPos + 1);
-					markAsDirty();
 					return false;
 				}
 			}
@@ -121,13 +107,9 @@
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
 					maskAndPosition(x, startPos);
-          markAsDirty();
 					return false;
 				} else if (k==9) { // tab key
-					if(dirty) {
-						$(this).change();
-						clearDirt();
-					}
+					$(this).change();
 					return true;
 				} else if (k==46||k==63272) { // delete key (with special case for safari)
 					preventDefault(e);
@@ -139,7 +121,6 @@
 						x.value = x.value.substring(0, startPos) + x.value.substring(endPos, x.value.length);
 					}
 					maskAndPosition(x, startPos);
-					markAsDirty();
 					return false;
 				} else { // any other key
 					return true;
