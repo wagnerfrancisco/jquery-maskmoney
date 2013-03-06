@@ -77,6 +77,7 @@
 							return true;
 						} else { // any other key with keycode less than 48 and greater than 57
 							preventDefault(e);
+              input.trigger('input');
 							return true;
 						}
 					} else if (input.val().length >= input.attr('maxlength')) {
@@ -92,6 +93,7 @@
 						x.value = x.value.substring(0, startPos) + key + x.value.substring(endPos, x.value.length);
 						maskAndPosition(x, startPos + 1);
 						markAsDirty();
+            input.trigger('input');
 						return false;
 					}
 				}
@@ -119,6 +121,7 @@
 						}
 						maskAndPosition(x, startPos);
 						markAsDirty();
+            input.trigger('input');
 						return false;
 					} else if (k==9) { // tab key
 						if(dirty) {
@@ -137,6 +140,7 @@
 						}
 						maskAndPosition(x, startPos);
 						markAsDirty();
+            input.trigger('input');
 						return false;
 					} else { // any other key
 						return true;
