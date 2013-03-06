@@ -1,4 +1,5 @@
 Just a simple way to create masks to your currency form fields with [jQuery](http://jquery.com/).
+Forked to work with AngularJS
 
 ***
 ### Show Time!
