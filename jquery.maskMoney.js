@@ -161,6 +161,7 @@
 						textRange.collapse(false); // set the cursor at the end of the input
 						textRange.select();
 					}
+          input.trigger('input');
 				}
 
 				function blurEvent(e) {
